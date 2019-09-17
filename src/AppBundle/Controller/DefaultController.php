@@ -30,7 +30,7 @@ class DefaultController extends Controller
         );
 
         $isEmpty = empty((array)$object);
-        var_dump($isEmpty);
+
         if(!$isEmpty){
 
             $username = (isset($object->username)) ? $object->username : null;
@@ -47,13 +47,5 @@ class DefaultController extends Controller
 
         $response = new Response($this->get('jms_serializer')->serialize($data, 'json'));
         return $response;
-        // $users = $this->getDoctrine()
-        //             ->getManager()
-        //             ->getRepository('BackendBundle:User')
-        //             ->findAll();
-
-        // $usersSerialize = $this->get('jms_serializer')->serialize($users, 'json');
-        
-        // return new Response($usersSerialize);
     }
 }
