@@ -1,0 +1,74 @@
+-- create database if not exists reformam_network;
+
+-- use reformam_network;
+
+-- CREATE TABLE `reformam_network`.`users` (
+--   `id` INT(255) NOT NULL AUTO_INCREMENT,
+--   `name` VARCHAR(100) NOT NULL,
+--   `username` VARCHAR(255) NOT NULL,
+--   `email` VARCHAR(255) NOT NULL,
+--   `street` VARCHAR(255) NOT NULL,
+--   `suite` VARCHAR(255) NOT NULL,
+--   `city` VARCHAR(255) NOT NULL,
+--   `zipcode` VARCHAR(45) NOT NULL,
+--   `lat` VARCHAR(100) NOT NULL,
+--   `lng` VARCHAR(100) NOT NULL,
+--   `phone` VARCHAR(100) NOT NULL,
+--   `website` VARCHAR(255) NOT NULL,
+--   `name_company` VARCHAR(255) NOT NULL,
+--   `catchPhrase` VARCHAR(255) NOT NULL,
+--   `bs` VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (`id`));
+  
+--   CREATE TABLE `reformam_network`.`posts` (
+--   `id` INT(255) NOT NULL AUTO_INCREMENT,
+--   `user_id` INT(255) NOT NULL,
+--   `title` VARCHAR(255) NOT NULL,
+--   `body` VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (`id`),
+--   INDEX `fk_posts_users_idx` (`user_id` ASC),
+--   CONSTRAINT `fk_posts_users`
+--     FOREIGN KEY (`user_id`)
+--     REFERENCES `reformam_network`.`users` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION);
+
+-- CREATE TABLE `reformam_network`.`comments` (
+--   `id` INT(255) NOT NULL AUTO_INCREMENT,
+--   `post_id` INT(255) NOT NULL,
+--   `name` VARCHAR(255) NOT NULL,
+--   `email` VARCHAR(255) NOT NULL,
+--   `body` VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (`id`),
+--   INDEX `fk_comments_posts_idx` (`post_id` ASC),
+--   CONSTRAINT `fk_comments_posts`
+--     FOREIGN KEY (`post_id`)
+--     REFERENCES `reformam_network`.`posts` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION);
+    
+-- CREATE TABLE `reformam_network`.`albums` (
+--   `id` INT(255) NOT NULL AUTO_INCREMENT,
+--   `user_id` INT(255) NOT NULL,
+--   `title` VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (`id`),
+--   INDEX `fk_albums_users_idx` (`user_id` ASC),
+--   CONSTRAINT `fk_albums_users`
+--     FOREIGN KEY (`user_id`)
+--     REFERENCES `reformam_network`.`users` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION);
+
+-- CREATE TABLE `reformam_network`.`photos` (
+--   `id` INT(255) NOT NULL AUTO_INCREMENT,
+--   `album_id` INT(255) NOT NULL,
+--   `title` VARCHAR(255) NOT NULL,
+--   `url` VARCHAR(255) NOT NULL,
+--   `thumbnailUrl` VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (`id`),
+--   INDEX `fk_photos_albums_idx` (`album_id` ASC),
+--   CONSTRAINT `fk_photos_albums`
+--     FOREIGN KEY (`album_id`)
+--     REFERENCES `reformam_network`.`albums` (`id`)
+--     ON DELETE NO ACTION
+--     ON UPDATE NO ACTION);

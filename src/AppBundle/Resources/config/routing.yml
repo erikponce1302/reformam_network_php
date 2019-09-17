@@ -1,0 +1,23 @@
+app_default:
+    resource: "@AppBundle/Resources/config/routing/default.yml"
+    prefix: /
+
+app_user:
+    resource: "@AppBundle/Resources/config/routing/user.yml"
+    prefix: /user
+
+# app_comment:
+#     resource: "@AppBundle/Resources/config/routing/comment.yml"
+#     prefix: /comment
+
+app_post:
+    resource: "@AppBundle/Resources/config/routing/post.yml"
+    prefix: /post
+
+# app_photo:
+#     resource: "@AppBundle/Resources/config/routing/photo.yml"
+#     prefix: /photo
+
+# app_album:
+#     resource: "@AppBundle/Resources/config/routing/album.yml"
+#     prefix: /album

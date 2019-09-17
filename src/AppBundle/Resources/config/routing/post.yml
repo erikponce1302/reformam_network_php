@@ -1,0 +1,24 @@
+post_create:
+    path: /create
+    defaults: { _controller: "AppBundle:Post:create"}
+    methods: POST
+
+post_list:
+    path: /list
+    defaults: { _controller: "AppBundle:Post:list"}
+    methods: GET
+
+post_get:
+    path: /get/{id}
+    defaults: { _controller: "AppBundle:Post:get"}
+    methods: GET
+
+post_edit:
+    path: /edit
+    defaults: { _controller: "AppBundle:Post:edit"}
+    methods: PUT
+
+post_delete:
+    path: /delete
+    defaults: { _controller: "AppBundle:Post:delete"}
+    methods:

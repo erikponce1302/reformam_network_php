@@ -1,0 +1,48 @@
+BackendBundle\Entity\Photo:
+    type: entity
+    table: photos
+    indexes:
+        fk_photos_albums_idx:
+            columns:
+                - album_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        title:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        url:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        thumbnailurl:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: thumbnailUrl
+    manyToOne:
+        album:
+            targetEntity: Album
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                album_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

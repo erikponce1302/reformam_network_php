@@ -1,0 +1,43 @@
+BackendBundle\Entity\Post:
+    type: entity
+    table: posts
+    indexes:
+        fk_posts_users_idx:
+            columns:
+                - user_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        title:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        body:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        user:
+            type: integer
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
