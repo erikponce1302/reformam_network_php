@@ -1,19 +1,24 @@
-cuser_new:
+comment_create:
     path: /create
-    defaults: { _controller: "AppBundle:User:create"}
+    defaults: { _controller: "AppBundle:Comment:create"}
     methods: POST
 
-user_list:
-    path: /list
-    defaults: { _controller: "AppBundle:Default:index"}
+comment_list:
+    path: /
+    defaults: { _controller: "AppBundle:Comment:list"}
     methods: GET
 
-user_edit:
+comment_get:
+    path: /{id}
+    defaults: { _controller: "AppBundle:Comment:get"}
+    methods: GET
+
+comment_edit:
     path: /edit
-    defaults: { _controller: "AppBundle:Default:index"}
+    defaults: { _controller: "AppBundle:Comment:edit"}
     methods: PUT
 
-user_delete:
+comment_delete:
     path: /delete
-    defaults: { _controller: "AppBundle:Default:index"}
+    defaults: { _controller: "AppBundle:Comment:delete"}
     methods:

@@ -14,17 +14,22 @@ class PostController extends Controller
         $doctrine = $this->getDoctrine()->getManager();
         $data = $doctrine->getRepository('BackendBundle:Post')->findAll();
 
+        if(!$data){
+            $data = new Post();
+        }
+
         $response = $this->get('jms_serializer')->serialize($data, 'json');
 
         return new Response($response);
     }
 
     public function getAction(Request $request, $id){
-        if(!is_null($id)){
-            $doctrine = $this->getDoctrine()->getManager();
-            $data = $doctrine->getRepository('BackendBundle:Post')->findById($id);    
-        }
+        $doctrine = $this->getDoctrine()->getManager();
+        $data = $doctrine->getRepository('BackendBundle:Post')->findOneById($id);
         
+        if(!$data){
+            $data = new Post();
+        }
         $response = $this->get('jms_serializer')->serialize($data, 'json');
         
         return new Response($response);

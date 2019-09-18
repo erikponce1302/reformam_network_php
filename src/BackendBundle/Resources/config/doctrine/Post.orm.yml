@@ -27,8 +27,6 @@ BackendBundle\Entity\Post:
             length: 255
             options:
                 fixed: false
-        user:
-            type: integer
     manyToOne:
         user:
             targetEntity: User

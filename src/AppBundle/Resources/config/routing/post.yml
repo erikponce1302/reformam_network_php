@@ -4,12 +4,12 @@ post_create:
     methods: POST
 
 post_list:
-    path: /list
+    path: /
     defaults: { _controller: "AppBundle:Post:list"}
     methods: GET
 
 post_get:
-    path: /get/{id}
+    path: /{id}
     defaults: { _controller: "AppBundle:Post:get"}
     methods: GET
 

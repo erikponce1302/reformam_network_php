@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use BackendBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
-use \stdClass;
 
 class UserController extends Controller
 {

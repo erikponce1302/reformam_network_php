@@ -1,19 +1,24 @@
-user_new:
+album_new:
     path: /create
-    defaults: { _controller: "AppBundle:User:create"}
+    defaults: { _controller: "AppBundle:Album:create"}
     methods: POST
 
-user_list:
-    path: /list
-    defaults: { _controller: "AppBundle:Default:index"}
+album_list:
+    path: /
+    defaults: { _controller: "AppBundle:Album:list"}
     methods: GET
 
-user_edit:
+album_get:
+    path: /{id}
+    defaults: { _controller: "AppBundle:Album:get"}
+    methods: GET
+
+album_edit:
     path: /edit
-    defaults: { _controller: "AppBundle:Default:index"}
+    defaults: { _controller: "AppBundle:Album:edit"}
     methods: PUT
 
-user_delete:
+album_delete:
     path: /delete
-    defaults: { _controller: "AppBundle:Default:index"}
+    defaults: { _controller: "AppBundle:Album:delete"}
     methods:

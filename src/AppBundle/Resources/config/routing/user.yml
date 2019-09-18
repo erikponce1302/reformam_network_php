@@ -4,12 +4,12 @@ user_create:
     methods: POST
 
 user_list:
-    path: /list
+    path: /
     defaults: { _controller: "AppBundle:User:list"}
     methods: GET
 
 user_get:
-    path: /get/{id}
+    path: /{id}
     defaults: { _controller: "AppBundle:User:get"}
     methods: GET
 
