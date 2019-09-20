@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use BackendBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
+use \stdClass;
+use AppBundle\Services\Helper;
 
 class UserController extends Controller
 {
@@ -17,10 +19,14 @@ class UserController extends Controller
         $doctrine = $this->getDoctrine()->getManager();
         $users = $doctrine->getRepository('BackendBundle:User')->findAll();
 
-        $data = $this->parseUser($users);
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
+        // $data = $this->parseUser($users);
+        // $response = $this->get('jms_serializer')->serialize($data, 'json');
 
-        return new Response($response);
+        // return new Response($response);
+
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($users);
+        // die;
     }
     
     /**
