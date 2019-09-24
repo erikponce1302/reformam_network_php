@@ -7,10 +7,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use BackendBundle\Entity\Post;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Services\Helper;
 
 class PostController extends Controller
 {
+    /**
+     * 
+     */
     public function listAction(){
+        
         $doctrine = $this->getDoctrine()->getManager();
         $data = $doctrine->getRepository('BackendBundle:Post')->findAll();
 
@@ -18,11 +23,20 @@ class PostController extends Controller
             $data = new Post();
         }
 
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
+        $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'msg' => 'Posts GetAll',
+            'posts' => $data
+        );
 
-        return new Response($response);
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
+    /**
+     * 
+     */
     public function getAction(Request $request, $id){
         $doctrine = $this->getDoctrine()->getManager();
         $data = $doctrine->getRepository('BackendBundle:Post')->findOneById($id);
@@ -30,14 +44,21 @@ class PostController extends Controller
         if(!$data){
             $data = new Post();
         }
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
         
-        return new Response($response);
+        $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'msg' => 'Post Detail',
+            'post' => $data
+        );
+
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
     public function createAction(Request $request){
         $json = $request->request->all();
-        $objectPost = json_decode(json_encode($json), FALSE);
+        $objectPost = json_decode($json["data"]);
         
         $userId = isset($objectPost->userId) ? $objectPost->userId : null;
         $title = isset($objectPost->title) ? $objectPost->title : null;
@@ -71,9 +92,8 @@ class PostController extends Controller
             );
         }
 
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
-        
-        return new Response($response);
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
     public function deleteAction(){

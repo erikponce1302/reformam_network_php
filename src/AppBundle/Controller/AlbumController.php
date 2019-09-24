@@ -7,10 +7,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use BackendBundle\Entity\Album;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Services\Helper;
 
 class AlbumController extends Controller
 {
+    /**
+     * 
+     */
     public function listAction(){
+        
         $doctrine = $this->getDoctrine()->getManager();
         $data = $doctrine->getRepository('BackendBundle:Album')->findAll();
 
@@ -18,11 +23,20 @@ class AlbumController extends Controller
             $data = new Album();
         }
 
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
+        $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'msg' => 'Albums GetAll',
+            'albums' => $data
+        );
 
-        return new Response($response);
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
+    /**
+     * 
+     */
     public function getAction(Request $request, $id){
         $doctrine = $this->getDoctrine()->getManager();
         $data = $doctrine->getRepository('BackendBundle:Album')->findOneById($id);
@@ -30,14 +44,24 @@ class AlbumController extends Controller
         if(!$data){
             $data = new Album();
         }
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
-        
-        return new Response($response);
+
+        $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'msg' => 'Album Detail',
+            'album' => $data
+        );
+
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
+    /**
+     * 
+     */
     public function createAction(Request $request){
         $json = $request->request->all();
-        $objectPost = json_decode(json_encode($json), FALSE);
+        $objectPost = json_decode($json["data"]);
         
         $userId = isset($objectPost->userId) ? $objectPost->userId : null;
         $title = isset($objectPost->title) ? $objectPost->title : null;
@@ -68,9 +92,8 @@ class AlbumController extends Controller
             );
         }
 
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
-        
-        return new Response($response);
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
     public function deleteAction(){

@@ -18,6 +18,8 @@ class Helper {
         $response = new \Symfony\Component\HttpFoundation\Response();
         $response->setContent($json);
         $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Credentials', true);
+
         // $response->headers->set('Access-Control-Allow-Origin','*');
         $response->headers->set('Access-Control-Allow-Origin', 'http://localhost:3000');
         $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS'); 

@@ -19,14 +19,15 @@ class UserController extends Controller
         $doctrine = $this->getDoctrine()->getManager();
         $users = $doctrine->getRepository('BackendBundle:User')->findAll();
 
-        // $data = $this->parseUser($users);
-        // $response = $this->get('jms_serializer')->serialize($data, 'json');
-
-        // return new Response($response);
+        $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'msg' => 'Users GetAll',
+            'users' => $users
+        );
 
         $helpers = $this->get(Helper::class);
-        return $helpers->json($users);
-        // die;
+        return $helpers->json($data);
     }
     
     /**
@@ -35,12 +36,18 @@ class UserController extends Controller
     public function getAction(Request $request, $id){
         if(!is_null($id)){
             $doctrine = $this->getDoctrine()->getManager();
-            $data = $doctrine->getRepository('BackendBundle:User')->findById($id);    
+            $data = $doctrine->getRepository('BackendBundle:User')->findOneById($id);    
         }
-        
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
 
-        return new Response($response);
+        $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'msg' => 'User detail',
+            'user' => $data
+        );
+
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
     /**
@@ -48,8 +55,7 @@ class UserController extends Controller
      */
     public function createAction(Request $request){
         $json = $request->request->all();
-        $objectUser = json_decode(json_encode($json), FALSE);
-        
+        $objectUser = json_decode($json["data"]);
         
         $name = isset($objectUser->name) ? $objectUser->name : null;
         $username = isset($objectUser->username) ? $objectUser->username : null;
@@ -58,12 +64,12 @@ class UserController extends Controller
         $suite = isset($objectUser->suite) ? $objectUser->suite : null;
         $city = isset($objectUser->city) ? $objectUser->city : null;
         $zipcode = isset($objectUser->zipcode) ? $objectUser->zipcode : null;
-        $lat = isset($objectUser->lat) ? $objectUser->lat : null;
-        $lng = isset($objectUser->lng) ? $objectUser->lng : null;
+        $lat = isset($objectUser->latitud) ? $objectUser->latitud : null;
+        $lng = isset($objectUser->longitud) ? $objectUser->longitud : null;
         $phone = isset($objectUser->phone) ? $objectUser->phone : null;
         $website = isset($objectUser->website) ? $objectUser->website : null;
-        $nameCompany = isset($objectUser->nameCompany) ? $objectUser->nameCompany : null;
-        $catchphrase = isset($objectUser->catchphrase) ? $objectUser->catchphrase : null;
+        $nameCompany = isset($objectUser->name_company) ? $objectUser->name_company : null;
+        $catchphrase = isset($objectUser->catch_phrase) ? $objectUser->catch_phrase : null;
         $bs = isset($objectUser->bs) ? $objectUser->bs : null;
 
 
@@ -116,9 +122,8 @@ class UserController extends Controller
             );
         }
 
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
-        
-        return new Response($response);
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
     public function deleteAction(){

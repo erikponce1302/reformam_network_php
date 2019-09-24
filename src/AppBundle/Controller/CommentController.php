@@ -7,9 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use BackendBundle\Entity\Comment;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Services\Helper;
 
 class CommentController extends Controller
 {
+    /**
+     * 
+     */
     public function listAction(){
         
         $doctrine = $this->getDoctrine()->getManager();
@@ -19,11 +23,20 @@ class CommentController extends Controller
             $data = new Comment();
         }
         
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
+        $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'msg' => 'Comments GetAll',
+            'comments' => $data
+        );
 
-        return new Response($response);
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
+    /**
+     * 
+     */
     public function getAction(Request $request, $id){
         $doctrine = $this->getDoctrine()->getManager();
         $data = $doctrine->getRepository('BackendBundle:Comment')->findOneById($id);
@@ -32,14 +45,23 @@ class CommentController extends Controller
             $data = new Comment();
         }
 
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
-        
-        return new Response($response);
+        $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'msg' => 'Comment Detail',
+            'comment' => $data
+        );
+
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
+    /**
+     * 
+     */
     public function createAction(Request $request){
         $json = $request->request->all();
-        $objectComment = json_decode(json_encode($json), FALSE);
+        $objectComment = json_decode($json["data"]);
         
         $postId = isset($objectComment->postId) ? $objectComment->postId : null;
         $name = isset($objectComment->name) ? $objectComment->name : null;
@@ -75,9 +97,8 @@ class CommentController extends Controller
             );
         }
 
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
-        
-        return new Response($response);
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
     public function deleteAction(){

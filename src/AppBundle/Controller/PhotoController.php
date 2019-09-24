@@ -7,38 +7,66 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use BackendBundle\Entity\Photo;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Services\Helper;
 
 class PhotoController extends Controller
 {
+    /**
+     * 
+     */
     public function listAction(){
+
         $doctrine = $this->getDoctrine()->getManager();
         $data = $doctrine->getRepository('BackendBundle:Photo')->findAll();
 
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
+        if(!$data){
+            $data = new Photo();
+        }
 
-        return new Response($response);
+        $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'msg' => 'Photos GetAll',
+            'photos' => $data
+        );
+
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
+    /**
+     * 
+     */
     public function getAction(Request $request, $id){
-        $data = new stdClass();
+    
         if(!is_null($id)){
             $doctrine = $this->getDoctrine()->getManager();
             $data = $doctrine->getRepository('BackendBundle:Photo')->findOneById($id);    
         }
         
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
-        
-        return new Response($response);
+        if(!$data){
+            $data = new Photo();
+        }
+
+        $data = array(
+            'status' => 'success',
+            'code' => 200,
+            'msg' => 'Photo Detail',
+            'photo' => $data
+        );
+
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
     public function createAction(Request $request){
         $json = $request->request->all();
-        $objectPost = json_decode(json_encode($json), FALSE);
+        $objectPhoto = json_decode($json["data"]);
         
-        $albumId = isset($objectPost->albumId) ? $objectPost->albumId : null;
-        $title = isset($objectPost->title) ? $objectPost->title : null;
-        $url = isset($objectPost->url) ? $objectPost->url : null;
-        $thumbnailUrl = isset($objectPost->thumbnailUrl) ? $objectPost->thumbnailUrl : null;
+        $albumId = isset($objectPhoto->albumId) ? $objectPhoto->albumId : null;
+        $title = isset($objectPhoto->title) ? $objectPhoto->title : null;
+        $url = isset($objectPhoto->url) ? $objectPhoto->url : null;
+        $thumbnailUrl = isset($objectPhoto->thumbnailUrl) ? $objectPhoto->thumbnailUrl : null;
 
         if( !is_null($albumId) && !is_null($title) && !is_null($url) && !is_null($thumbnailUrl)){
             $doctrine = $this->getDoctrine()->getManager();
@@ -68,9 +96,8 @@ class PhotoController extends Controller
             );
         }
 
-        $response = $this->get('jms_serializer')->serialize($data, 'json');
-        
-        return new Response($response);
+        $helpers = $this->get(Helper::class);
+        return $helpers->json($data);
     }
 
     public function deleteAction(){
